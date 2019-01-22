@@ -1,0 +1,64 @@
+variables:
+  CONAN_REFERENCE: "llvm/4.0.0"
+  CONAN_USERNAME: "huangminghuang"
+  CONAN_LOGIN_USERNAME: "huangminghuang"
+  CONAN_CHANNEL: "stable"
+  CONAN_UPLOAD: "https://api.bintray.com/conan/huangminghuang/conan"
+  CONAN_ARCH: x86_64
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+  - script: |
+      pip install --upgrade pip
+      chmod +x .ci/install.sh
+      ./.ci/install.sh
+      chmod +x .ci/run.sh
+      ./.ci/run.sh
+  strategy:
+    matrix:
+      GCC6:
+        CONAN_GCC_VERSIONS: 6
+        CONAN_DOCKER_IMAGE: conanio/gcc6 
+      GCC7:
+        CONAN_GCC_VERSIONS: 7
+        CONAN_DOCKER_IMAGE: conanio/gcc7
+      GCC8:
+        CONAN_GCC_VERSIONS: 8
+        CONAN_DOCKER_IMAGE: conanio/gcc8
+      CLANG4.0:
+        CONAN_CLANG_VERSIONS: 4.0
+        CONAN_DOCKER_IMAGE: conanio/clang40
+      CLANG5.0:
+        CONAN_CLANG_VERSIONS: 5.0
+        CONAN_DOCKER_IMAGE: conanio/clang50
+      CLANG6.0:
+        CONAN_CLANG_VERSIONS: 6.0
+        CONAN_DOCKER_IMAGE: conanio/clang60
+      CLANG7:
+        CONAN_CLANG_VERSIONS: 7.0
+        CONAN_DOCKER_IMAGE: conanio/clang7
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - task: Xcode@5
+    inputs:
+      xcodeVersion: $(xcodeVersion) # Options: default, 10, 9, 8, specifyPath
+  - script: |
+      chmod +x .ci/install.sh
+      ./.ci/install.sh
+      chmod +x .ci/run.sh
+      ./.ci/run.sh
+  strategy:
+    matrix:
+      xcodeVersion9:
+        xcodeVersion: 9
+        CONAN_APPLE_CLANG_VERSIONS: 9.1
+      xcodeVersion10:
+        xcodeVersion: 10
+        CONAN_APPLE_CLANG_VERSIONS: 10.0
