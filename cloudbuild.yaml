@@ -1,0 +1,128 @@
+steps:        
+  ### build the final image
+  - name: 'conanio/gcc6'
+    id: gcc6
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 3600s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_GCC_VERSIONS=6
+  - name: 'conanio/gcc7'
+    id: gcc7
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 3600s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_GCC_VERSIONS=7
+  - name: 'conanio/gcc8'
+    id: gcc8
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 3600s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_GCC_VERSIONS=8
+  - name: 'conanio/clang40'
+    id: clang40
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 7200s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_CLANG_VERSIONS=4.0
+  - name: 'conanio/clang50'
+    id: clang50
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 7200s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_CLANG_VERSIONS=5.0
+  - name: 'conanio/clang60'
+    id: clang60
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 7200s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - CONAN_CLANG_VERSIONS=6.0
+  - name: 'conanio/clang7'
+    id: clang7
+    secretEnv: ['CONAN_PASSWORD']
+    entrypoint: bash
+    args:  [ 'python', './build.py' ]
+    timeout: 7200s
+    env: 
+      - CONAN_REFERENCE=llvm/4.0.1
+      - CONAN_USERNAME=huangminghuang
+      - CONAN_LOGIN_USERNAME=huangminghuang
+      - CONAN_CHANNEL=stable
+      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
+      - CONAN_ARCHS=x86_64
+      - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
+      - CONAN_CLANG_VERSIONS=7.0
+options:
+  machineType: 'N1_HIGHCPU_32'
+timeout: 39600s
+  
+secrets:
+  # `secrets` do not support variable substitution; therefore, do not use `$PROJECT_ID` for kmsKeyName. 
+- kmsKeyName: projects/oci-grandeos/locations/global/keyRings/my-ring/cryptoKeys/huangming
+  secretEnv:
+    CONAN_PASSWORD: CiQA9uVpFleBaRe3RpFzrD5RjHEoyLqKs/BmyHBGHN6xJJhQmkkSUQDyCeiwQrZn+AIBnEeN6EWObgKeirvfQhk1h9IsnYg9Ak1IgHS+w+a0a33ijtbiJzl7dcvw7pz73yw0z7QvH4SIHZHEs9MNS+fmDID0is/ltQ==

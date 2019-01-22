@@ -7,6 +7,8 @@ if __name__ == "__main__":
     if platform.system() == "Linux":
         filtered_builds = []
         for settings, options, env_vars, build_requires in builder.builds:
+            if settings["arch"] == 'x86':
+                continue
             if settings["compiler.libcxx"] == "libstdc++":
                 if settings["compiler"] == "clang" :
                   settings_libstdcxx11 = settings.copy()

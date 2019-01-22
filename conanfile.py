@@ -3,13 +3,13 @@ import os
 
 class MongocxxdriverConan(ConanFile):
     name = "llvm"
-    version = "4.0"
+    version = "4.0.1"
     description = "llvm"
     topics = ("conan", "llvm")
     author = "Huang-Ming Huang <huangh@objectcomputing.com>"
     license = "MIT"
     exports = ["LICENSE"]
-    settings = "os", "compiler", "arch"
+    settings = "os", "compiler", "arch", "build_type"
     
     generators = "cmake"
     no_copy_source = True
@@ -25,7 +25,6 @@ conan_basic_setup()''')
         
     def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.definitions["CMAKE_BUILD_TYPE"]="Release"
         cmake.configure(source_dir=os.path.join(self.source_folder,"llvm"))
         return cmake
 

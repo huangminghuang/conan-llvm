@@ -1,12 +1,12 @@
 
 env:
    global:
-     - CONAN_REFERENCE: "llvm/4.0.0"
+     - CONAN_REFERENCE: "llvm/4.0.1"
      - CONAN_USERNAME: "huangminghuang"
      - CONAN_LOGIN_USERNAME: "huangminghuang"
      - CONAN_CHANNEL: "stable"
      - CONAN_UPLOAD: "https://api.bintray.com/conan/huangminghuang/conan"
-     - CONAN_ARCH: x86_64
+     - CONAN_ARCHS: x86_64
      
 linux: &linux
    os: linux
