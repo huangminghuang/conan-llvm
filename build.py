@@ -9,12 +9,13 @@ if __name__ == "__main__":
         for settings, options, env_vars, build_requires in builder.builds:
             if settings["arch"] == 'x86':
                 continue
+            if settings["build_type"] != 'Release':
+                continue
+
+            new_settings = settings.copy()
             if settings["compiler.libcxx"] == "libstdc++":
-                if settings["compiler"] == "clang" :
-                  settings_libstdcxx11 = settings.copy()
-                  settings_libstdcxx11["compiler.libcxx"] = "libstdc++11"
-                  filtered_builds.append([settings_libstdcxx11, options, env_vars, build_requires])
-            else:
-                filtered_builds.append([settings, options, env_vars, build_requires])
+                if settings["compiler"] == "clang":
+                    new_settings["compiler.libcxx"] = "libstdc++11"
+            filtered_builds.append([new_settings, options, env_vars, build_requires])
         builder.builds = filtered_builds
     builder.run()
