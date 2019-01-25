@@ -30,6 +30,10 @@ conan_basic_setup()''')
                               '''set_property(TARGET LLVMSupport PROPERTY LLVM_SYSTEM_LIBS "${{system_libs}}")
 target_include_directories(LLVMSupport PRIVATE {0}/include)
 target_link_libraries(LLVMSupport PRIVATE {0}/lib/libz.a)'''.format(self.deps_cpp_info['zlib'].rootpath))
+        
+        tools.replace_in_file("llvm/cmake/modules/LLVMConfig.cmake.in", '  include("@LLVM_CONFIG_EXPORTS_FILE@")', '''
+  find_package(ZLIB)
+  include("@LLVM_CONFIG_EXPORTS_FILE@")''')
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -48,7 +52,8 @@ target_link_libraries(LLVMSupport PRIVATE {0}/lib/libz.a)'''.format(self.deps_cp
         cmake.install()
         try:
             # For some reason, LLVMExports.cmake always contains the reference to libz.a. We already link it statically, remove it if it exists. 
-            tools.replace_in_file("%s/lib/cmake/llvm/LLVMExports.cmake" % self.package_folder , ";%s/lib/libz.a" % self.deps_cpp_info['zlib'].rootpath, "")
+            tools.replace_in_file("%s/lib/cmake/llvm/LLVMExports.cmake" % self.package_folder , 
+                                  ";%s/lib/libz.a" % self.deps_cpp_info['zlib'].rootpath, ";${ZLIB_LIBRARIES}")
         except:
             pass
 
