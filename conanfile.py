@@ -13,7 +13,7 @@ class LLVMConan(ConanFile):
 
     generators = "cmake"
     no_copy_source = True
-    build_requires = 'zlib/1.2.11@conan/stable'
+    requires = 'zlib/1.2.11@conan/stable'
 
     def source(self):
         self.run("git clone --depth 1 --single-branch --branch release_40 https://github.com/llvm-mirror/llvm.git")
@@ -51,9 +51,10 @@ target_link_libraries(LLVMSupport PRIVATE {0}/lib/libz.a)'''.format(self.deps_cp
         cmake = CMake(self)
         cmake.install()
         try:
-            # For some reason, LLVMExports.cmake always contains the reference to libz.a. We already link it statically, remove it if it exists. 
+            # For some reason, LLVMExports.cmake always contains the reference to libz.a. We need to change it to use ${ZLIB_LIBRARIES} instead. 
             tools.replace_in_file("%s/lib/cmake/llvm/LLVMExports.cmake" % self.package_folder , 
-                                  ";%s/lib/libz.a" % self.deps_cpp_info['zlib'].rootpath, ";${ZLIB_LIBRARIES}")
+                                  ";%s/lib/libz.a" % self.deps_cpp_info['zlib'].rootpath, 
+                                  ";${ZLIB_LIBRARIES}")
         except:
             pass
 

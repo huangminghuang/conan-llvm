@@ -1,22 +1,5 @@
 steps:        
   ### build the final image
-  - name: 'conanio/gcc6'
-    id: gcc6
-    secretEnv: ['CONAN_PASSWORD']
-    entrypoint: bash
-    args:  [ 'python', './build.py' ]
-    timeout: 3600s
-    env: 
-      - CONAN_REFERENCE=llvm/4.0.1
-      - CONAN_USERNAME=huangminghuang
-      - CONAN_LOGIN_USERNAME=huangminghuang
-      - CONAN_CHANNEL=stable
-      - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
-      - CONAN_ARCHS=x86_64
-      - CONAN_CMAKE_GENERATOR=Ninja
-      - HOME=
-      - CONAN_TEMP_TEST_FOLDER=1
-      - CONAN_GCC_VERSIONS=6
   - name: 'conanio/gcc7'
     id: gcc7
     secretEnv: ['CONAN_PASSWORD']
@@ -99,6 +82,8 @@ steps:
       - CONAN_UPLOAD=https://api.bintray.com/conan/huangminghuang/conan
       - CONAN_ARCHS=x86_64
       - CONAN_CMAKE_GENERATOR=Ninja
+      - HOME=
+      - CONAN_TEMP_TEST_FOLDER=1
       - CONAN_CLANG_VERSIONS=6.0
   - name: 'conanio/clang7'
     id: clang7
